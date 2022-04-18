@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 using TCC.Educacional.Api.Data;
 using TCC.Educacional.Api.Models;
@@ -32,7 +31,11 @@ namespace TCC.Educacional.Api.Controllers
         [Route("")]
         public async Task<IActionResult> GetAllAsync()
         {   
-            var user = await _context.Users.AsNoTracking().Include(x => x.Role).FirstOrDefaultAsync();
+            var user = await _context.Users
+                .AsNoTracking()
+                .Include(x => x.Role)
+                .FirstOrDefaultAsync();
+
             return Ok(user);
         } 
 
@@ -40,21 +43,51 @@ namespace TCC.Educacional.Api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return Ok();
+            var user = await _context.Users
+                       .AsNoTracking()
+                       .Include(x => x.Role)
+                       .FirstOrDefaultAsync(x => x.Id == id);
+            if(user == null)
+                return NotFound(new { message = "Usuário não encontrado"});
+
+            return Ok(user);
         }
 
         [HttpPut]
         [Route("{id:int}")]
         public async Task<IActionResult> UpdateAsync(User model, int id)
         {
-            return Ok();
+            var user = await _context.Users
+                       .Include(x => x.Role)
+                       .FirstOrDefaultAsync(x => x.Id == id);
+            if(user == null)
+                return NotFound(new { message = "Usuário não encontrado"});
+            else
+            {
+                user.Name = model.Name;
+                user.Password = model.Password;
+                user.RoleId = model.RoleId;
+                _context.Update(user);
+            }
+               
+            return Ok(user);
         }
 
         [HttpDelete]
         [Route("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return Ok();
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(user == null)
+                return NotFound(new { message = "Usuário não encontrado"});
+            else
+            {
+                _context.Remove(user);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(user);
         }
     }
 }
