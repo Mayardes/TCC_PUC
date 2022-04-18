@@ -22,6 +22,7 @@ namespace TCC.Educacional.Api.Controllers
         {
             var user = await context.Users
                 .AsNoTracking()
+                .Include(x => x.Role)
                 .Where(x => x.Name == model.Name && x.Password == model.Password)
                 .FirstOrDefaultAsync();
 
@@ -32,8 +33,8 @@ namespace TCC.Educacional.Api.Controllers
 
             return new
             {
-                user = user,
-                token = token
+                User = user,
+                Token = token
             };
         }
     }

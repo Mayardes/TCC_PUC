@@ -20,7 +20,7 @@ namespace TCC.Educacional.Api.Service
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, model.Name.ToString()),
-                    new Claim(ClaimTypes.NameIdentifier, model.Password.ToString())
+                    new Claim(ClaimTypes.Role, model.Role.Description.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(
