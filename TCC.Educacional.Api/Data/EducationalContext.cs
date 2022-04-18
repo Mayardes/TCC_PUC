@@ -11,6 +11,8 @@ namespace TCC.Educacional.Api.Data
         }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,6 +22,21 @@ namespace TCC.Educacional.Api.Data
             
             modelBuilder.Entity<Role>().HasKey(x => x.Id);
             modelBuilder.Entity<Role>().Property(x => x.Description).HasColumnType("varchar").HasMaxLength(100);
+
+            modelBuilder.Entity<Company>().HasKey(x => x.Id);
+            modelBuilder.Entity<Company>().Property(x => x.CompanyName).HasColumnType("varchar").HasMaxLength(200);
+            modelBuilder.Entity<Company>().Property(x => x.Address).HasColumnType("varchar").HasMaxLength(250);
+            modelBuilder.Entity<Company>().Property(x => x.MunicipalRegistration).HasColumnType("varchar").HasMaxLength(50);
+            modelBuilder.Entity<Company>().Property(x => x.StateRegistration).HasColumnType("varchar").HasMaxLength(50);
+
+
+            modelBuilder.Entity<Employee>().HasKey(x => x.Id);
+            modelBuilder.Entity<Employee>().Property(x => x.Name).HasColumnType("varchar").HasMaxLength(50);
+            modelBuilder.Entity<Employee>().Property(x => x.Position).HasColumnType("varchar").HasMaxLength(50);
+            modelBuilder.Entity<Employee>().Property(x => x.Department).HasColumnType("varchar").HasMaxLength(80);
+
+
+
         }
     }
 }
