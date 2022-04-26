@@ -16,7 +16,7 @@ const TBody = (item) => {
 
     const linhas = item.autores.map((linha, index) => {
         return (
-            <tr>
+            <tr key = {index} >
                 <td>{linha.nome}</td>
                 <td>{linha.livro}</td>
                 <td>{linha.preco}</td>
