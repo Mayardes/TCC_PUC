@@ -12,29 +12,33 @@ const THead = () => {
     </thead>);
 }
 
-const TBody = () => {
+const TBody = (item) => {
+
+    const linhas = item.autores.map((linha, index) => {
+        return (
+            <tr>
+                <td>{linha.nome}</td>
+                <td>{linha.livro}</td>
+                <td>{linha.preco}</td>
+                <td><button>Remover</button></td>
+            </tr>
+        );
+    });
+
     return (<tbody>
-        <tr>
-            <td>Oliveira</td>
-            <td>React</td>
-            <td>1500</td>
-            <td><button>Remover</button></td>
-        </tr>
-        <tr>
-            <td>Oliveira</td>
-            <td>React</td>
-            <td>1500</td>
-            <td><button>Remover</button></td>
-        </tr>
+        {linhas}
     </tbody>);
 }
 
 
 class Tabela extends Component {
     render() {
+
+        const { autores } = this.props;
+
         return (<table>
-            <THead/>
-            <TBody/>
+            <THead />
+            <TBody autores={autores} />
         </table>);
     }
 }
