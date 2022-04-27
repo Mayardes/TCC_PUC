@@ -20,7 +20,7 @@ const TBody = (item) => {
                 <td>{linha.nome}</td>
                 <td>{linha.livro}</td>
                 <td>{linha.preco}</td>
-                <td><button>Remover</button></td>
+                <td><button onClick = {() => {item.removeAutor(index)}}>Remover</button></td>
             </tr>
         );
     });
@@ -34,11 +34,11 @@ const TBody = (item) => {
 class Tabela extends Component {
     render() {
 
-        const { autores } = this.props;
+        const { autores, removeAutor } = this.props;
 
         return (<table>
             <THead />
-            <TBody autores={autores} />
+            <TBody autores={autores} removeAutor = {removeAutor}/>
         </table>);
     }
 }
