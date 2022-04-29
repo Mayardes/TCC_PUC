@@ -2,15 +2,17 @@ import logo from './logo.svg';
 import './App.css';
 import Tabela from './Components/Tabela';
 import { Component } from 'react';
+import Formulario from './Components/Formulario';
+import {Fragment} from 'react';
 
 class App extends Component {
 
   state = {
-    autores : [
+    autores: [
       {
         nome: "Robert Cecil",
         livro: "Clean Code",
-        preco: 95.00 
+        preco: 95.00
       },
       {
         nome: "Eric Evans",
@@ -25,22 +27,23 @@ class App extends Component {
     ]
   }
 
-  removeAutor = (element) =>{
+  removeAutor = (element) => {
     const { autores } = this.state;
 
     this.setState({
-      autores : autores.filter((autor, posA) =>{
-          return posA !== element;
-        })
+      autores: autores.filter((autor, posA) => {
+        return posA !== element;
+      })
     });
   }
 
 
-  render(){
+  render() {
     return (
-      <div className="App">
-        <Tabela autores = {this.state.autores} removeAutor = {this.removeAutor}/>
-      </div>
+      <Fragment>
+        <Tabela autores={this.state.autores} removeAutor={this.removeAutor} />
+        <Formulario />
+      </Fragment>
     );
   }
 }
